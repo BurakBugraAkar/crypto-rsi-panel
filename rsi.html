@@ -1,0 +1,137 @@
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.4.0/dist/chartjs-plugin-annotation.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<canvas id="myChart"></canvas>
+
+<script>
+
+$.get("http://localhost/api/rsi", function( data ) {
+var xyValues = data.xy
+var names = data.names
+Chart.register(ChartDataLabels);
+console.log(data)
+new Chart("myChart", {
+  type: "scatter",
+  data: {
+    labels: names,
+    datasets: [{
+      pointRadius: 4,
+      pointBackgroundColor: "rgba(0,0,255,1)",
+      data: xyValues,
+    }]
+  },
+  options: {
+    scales: {
+      //xAxes: [{ticks: {min: 40, max:160}}],
+      //yAxes: [{ticks: {min: 20, max: 80}}],
+    },
+    plugins: {
+      legend: {display: false},
+      datalabels: {
+        align: 'end',
+        padding: {
+          bottom: 1.5,
+        }
+      },
+      tooltip: {
+        enabled: true,
+      },
+      annotation: {
+        annotations: {
+          box1: {
+            type: "box",
+            yMin: 70,
+            yMax: 80,
+            label: {
+              content: "OVERBOUGHT",
+              enabled: true,
+              position: {
+                x: "end",
+                y: "right",
+              },
+              color: "rgba(0,0,0,0.5)",
+              font: {
+                "size": 20,
+              },
+            },
+            backgroundColor: "rgba(255,0,0,0.5)",
+            drawTime: 'beforeDraw',
+          },
+          box2: {
+            type: "box",
+            yMin: 60,
+            yMax: 70,
+            label: {
+              content: "STRONG",
+              enabled: true,
+              position: {
+                x: "end",
+                y: "right",
+              },
+              color: "rgba(0,0,0,0.5)",
+              font: {
+                "size": 20,
+              },
+            },
+            backgroundColor: "rgba(255,0,0,0.2)",
+            drawTime: 'beforeDraw',
+          },
+          box3: {
+            type: "box",
+            yMin: 30,
+            yMax: 40,
+            label: {
+              content: "WEAK",
+              enabled: true,
+              position: {
+                x: "end",
+                y: "right",
+              },
+              color: "rgba(0,0,0,0.5)",
+              font: {
+                "size": 20,
+              },
+            },
+            backgroundColor: "rgba(0,255,0,0.2)",
+            drawTime: 'beforeDraw',
+          },
+          box4: {
+            type: "box",
+            yMin: 20,
+            yMax: 30,
+            label: {
+              content: "OVERSOLD",
+              enabled: true,
+              position: {
+                x: "end",
+                y: "right",
+              },
+              color: "rgba(0,0,0,0.5)",
+              font: {
+                "size": 20,
+              },
+            },
+            backgroundColor: "rgba(0,255,0,0.5)",
+            drawTime: 'beforeDraw',
+          }
+        }
+      },
+      tooltip: {
+        callbacks: {
+          label: function(tooltipItem, data) {
+            var label = tooltipItem.raw.label || '';
+            if (label) {
+              label += ': ';
+            }
+            label += tooltipItem.parsed.y
+            return label;
+          }
+        }
+    }
+    },
+  }
+})});
+
+</script>
