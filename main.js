@@ -4,7 +4,7 @@ const app = express();
 const cors = require('cors');
 
 app.use(cors());
-app.listen(80, () => console.log('Server started on port 3000'));
+app.listen(80, () => console.log('Server started on port 80 http://localhost'));
 
 app.get('/api/rsi', (req, res) => {
     axios.get("https://api.bitapi.pro/v1/market/oscillator").then(response => {
@@ -23,6 +23,9 @@ app.get('/api/rsi', (req, res) => {
             }   
         }
         res.send({xy: data, names: names});
-        //res.send(response.data);
+    });
 });
-});
+
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/src/views/index.html');
+})
