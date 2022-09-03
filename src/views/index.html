@@ -7,7 +7,7 @@
 
 <script>
 
-$.get("http://localhost/api/rsi", function( data ) {
+$.get("api/rsi", function( data ) {
 var xyValues = data.xy
 var names = data.names
 Chart.register(ChartDataLabels);
