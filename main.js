@@ -7,7 +7,7 @@ app.use(cors());
 app.listen(process.env.PORT || 80, () => console.log('Server started on port 80 http://localhost'));
 
 app.get('/api/rsi', (req, res) => {
-    axios.get("https://api.bitapi.pro/v1/market/oscillator").then(response => {
+    axios.get("https://api.bitapi.pro/v1/market/oscillator?limit=150").then(response => {
         let data = [];
         let names = [];
         let y = 1 ;
